@@ -22,3 +22,7 @@ TEST_F(BaseballFixture, ThrowException01) {
 TEST_F(BaseballFixture, ThrowException02) {
 	assertIllegalArguemnt("12s");
 }
+
+TEST_F(BaseballFixture, ThrowException03) {
+	assertIllegalArguemnt("121");
+}
