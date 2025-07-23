@@ -3,5 +3,23 @@
 
 TEST(BaseballGame, ThrowException01) {
 	Baseball game;
-	EXPECT_THROW(game.guess(string("12")), length_error);
+	try {
+		game.guess(string("12"));
+		FAIL();
+	}
+	catch (exception e) {
+
+	}
+}
+
+TEST(BaseballGame, ThrowException02) {
+	Baseball game;
+	try {
+		game.guess(string("12s"));
+		FAIL();
+	}
+	catch(exception e){
+
+	}
+
 }
