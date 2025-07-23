@@ -9,15 +9,23 @@ struct GuessResult {
 
 class Baseball {
 public:
-	explicit Baseball (const string& question) : question(question){}
+	explicit Baseball(const string& question) : question(question) {}
 	GuessResult guess(const string& guessNumber) {
 		assertInvalidArgument(guessNumber);
+		GuessResult result = { false, 0,0 };
 		if (guessNumber == question) {
 			return { true, 3,0 };
 		}
-		return { false,0,0 };
+
+		result.strikes = getStrikeCount(guessNumber);
+
+		result.balls = getBallCount(guessNumber);
+
+		if (result.strikes == 3)
+			result.solved = true;
+
+		return result;
 	}
-	
 
 private:
 	string question;
@@ -39,5 +47,27 @@ private:
 		return guessNumber[0] == guessNumber[1] ||
 			guessNumber[1] == guessNumber[2] ||
 			guessNumber[2] == guessNumber[0];
+	}
+	int getBallCount(const std::string& guessNumber)
+	{
+		int ret = 0;
+		for (int i = 0; i < guessNumber.length(); i++) {
+			for (int j = 0; j < guessNumber.length(); j++) {
+				if (i == j) continue;
+				if (guessNumber[i] == question[j]) ret++;
+			}
+		}
+		return ret;
+	}
+
+	int getStrikeCount(const std::string& guessNumber)
+	{
+		int ret = 0;
+		for (int i = 0; i < guessNumber.length(); i++) {
+			if (guessNumber[i] == question[i]) {
+				ret++;
+			}
+		}
+		return ret;
 	}
 };
