@@ -1,25 +1,24 @@
 #include "gmock/gmock.h"
 #include "baseball.cpp"
 
-TEST(BaseballGame, ThrowException01) {
+class BaseballFixture : public testing::Test {
+public:
 	Baseball game;
-	try {
-		game.guess(string("12"));
-		FAIL();
+	void assertIllegalArguemnt(string guessNumber) {
+		try {
+			game.guess(guessNumber);
+			FAIL();
+		}
+		catch(exception e){
+			//PASS
+		}
 	}
-	catch (exception e) {
+};
 
-	}
+TEST_F(BaseballFixture, ThrowException01) {
+	assertIllegalArguemnt("12");
 }
 
-TEST(BaseballGame, ThrowException02) {
-	Baseball game;
-	try {
-		game.guess(string("12s"));
-		FAIL();
-	}
-	catch(exception e){
-
-	}
-
+TEST_F(BaseballFixture, ThrowException02) {
+	assertIllegalArguemnt("12s");
 }
